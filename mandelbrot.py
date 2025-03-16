@@ -18,7 +18,7 @@ def get_escape_time(c: complex, max_iterations: int) -> int | None:
     for i in range(max_iterations + 1):
         if abs(z) > 2:
             return i
-        z = z ** 2 + c
+        z = z ** 2 + c #iteration
     return None
 
 
@@ -93,7 +93,20 @@ def get_escape_time_color_arr(c_arr: np.ndarray, max_iterations: int) -> np.ndar
 
 
 def get_escape_time_julia(z: complex, c: complex, max_iterations: int) -> int | None:
-    """Returns the escape time of a point with a Julia polynomial"""
+    """Returns the escape time of a point with a Julia polynomial P_c(z) = z^2 + c 
+    
+    Parameters:
+        z [complex]: initial term
+        c [complex]: constant 
+        max_iteration [int}: maximum iterations to consider
+
+    Returns:
+        int:
+            The number of iterations (<= max_iterations) it took for the sequence to exceed magnitude 2
+        None:
+            The sequence at this point did not exceed magnitude 2 for max_iterations
+    
+    """
 
     y = z
     for i in range(max_iterations + 1):
@@ -104,6 +117,21 @@ def get_escape_time_julia(z: complex, c: complex, max_iterations: int) -> int | 
 
 
 def get_julia_color_arr(c_arr: np.ndarray, c: complex, max_iterations: int) -> np.ndarray:
+    """Returns an array colored by escape times of points iterated through a julia polynomial.
+    
+    Parameters:
+        c_arr [np.ndarray]:
+            an array of complex numbers
+        c [complex]:
+            constant complex number
+        max_iterations [int]:
+            max iterations to calculate
+
+    Returns:
+        np.ndarray
+            An array with values of colors of escape times based on the rule (max_iterations - escape_time + 1)/(1 + max_iterations)
+    
+    """
 
     canvas = np.zeros(c_arr.shape, dtype = float)
     x , y = c_arr.shape
